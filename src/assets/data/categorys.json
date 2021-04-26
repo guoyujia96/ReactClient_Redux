@@ -1,0 +1,146 @@
+[{
+  "_id": "5e12b8bce31bb727e4b0e348",
+  "parentId": "0",
+  "name": "家用电器",
+  "__v": 0
+},{
+  "_id": "5e130e60e31bb727e4b0e34b",
+  "parentId": "0",
+  "name": "手机",
+  "__v": 0
+},{
+  "_id": "5e130ec7e31bb727e4b0e34c",
+  "parentId": "0",
+  "name": "洗衣机",
+  "__v": 0
+},{
+  "_id": "5e1346533ed02518b4db0cd7",
+  "parentId": "0",
+  "name": "图书",
+  "__v": 0
+},{
+  "_id":  "5e13467e3ed02518b4db0cd8",
+  "parentId": "0",
+  "name": "杯具",
+  "__v": 0
+},{
+  "_id": "5e1346c83ed02518b4db0cd9",
+  "parentId": "0",
+  "name": "纸",
+  "__v": 0
+},{
+  "_id": "5e144dc7297c1138787e96ab",
+  "parentId": "0",
+  "name": "服装",
+  "__v": 0
+},{
+  "_id": "5e144de1297c1138787e96ac",
+  "parentId": "0",
+  "name": "玩具",
+  "__v": 0
+},{
+  "_id": "5e16e37e49dc6b38d018fe28",
+  "parentId": "0",
+  "name": "手机",
+  "__v": 0
+},{
+  "_id": "5e16e38949dc6b38d018fe29",
+  "parentId": "0",
+  "name": "三星",
+  "__v": 0
+},{
+  "_id": "5fc0bf33eb957f1b94f4a959",
+  "parentId": "0",
+  "name": "医药",
+  "__v": 0
+},{
+  "_id": "5fc0bfa4eb957f1b94f4a95a",
+  "parentId": "0",
+  "name": "食品",
+  "__v": 0
+},{
+  "_id":"5fc0bfcdeb957f1b94f4a95b",
+  "parentId": "0",
+  "name": "发型",
+  "__v": 0
+},{
+  "_id": "5fc0bfd7eb957f1b94f4a95c",
+  "parentId": "0",
+  "name": "水果",
+  "__v": 0
+},{
+  "_id": "5fc0bfdeeb957f1b94f4a95d",
+  "parentId": "0",
+  "name": "发饰",
+  "__v": 0
+},{
+  "_id": "5fc0bfe6eb957f1b94f4a95e",
+  "parentId": "0",
+  "name": "图纸",
+  "__v": 0
+},{
+  "_id": "5fc9e7cc618171388c09b7eb",
+  "parentId": "0",
+  "name": "哈哈哈",
+  "__v": 0
+},{
+  "_id":"5fc5a5ff4870c82a702c5efd",
+  "parentId": "0",
+  "name": "bbb",
+  "__v": 0
+},{
+  "_id": "5fc5b24b4870c82a702c5f05",
+  "parentId": "0",
+  "name": "2",
+  "__v": 0
+},{
+  "_id": "5fc5b2ae4870c82a702c5f06",
+  "parentId": "0",
+  "name": "34",
+  "__v": 0
+},{
+  "_id":"5fc30a1833fe4221c4546275",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "冰箱",
+  "__v": 0
+},{
+  "_id": "5fc30a4133fe4221c4546276",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "微波炉",
+  "__v": 0
+},{
+  "_id": "5fc74b650dd9b10798413162",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "电脑",
+  "__v": 0
+},{
+  "_id": "5fc30a4a33fe4221c4546277",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "电饭煲",
+  "__v": 0
+},{
+  "_id":"5fc30a5133fe4221c4546278",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "洗衣机",
+  "__v": 0
+},{
+  "_id": "5fc30a6533fe4221c4546279",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "消毒碗柜",
+  "__v": 0
+},{
+  "_id":  "5fc30a6f33fe4221c454627a",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "电视",
+  "__v": 0
+},{
+  "_id":  "5fc30a7a33fe4221c454627b",
+  "parentId": "5e12b8bce31bb727e4b0e348",
+  "name": "抽油烟机",
+  "__v": 0
+},{
+  "_id": "5fc5b2b84870c82a702c5f07",
+  "parentId": "5fc5b2ae4870c82a702c5f06",
+  "name": "222",
+  "__v": 0
+}]
