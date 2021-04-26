@@ -1,0 +1,81 @@
+[{
+  "_id":"5e0d7292bd72914ee8e714d4",
+  "name": "测试",
+  "auth_time": 1607481252131,
+  "auth_name": "admin",
+  "create_time": 1554639521749,
+  "menus": [
+    "/category",
+    "/home"
+  ]
+},{
+  "_id": "5e171d55d59eb648d4ed66a8",
+  "menus": [
+    "/home",
+    "/products",
+    "/category",
+    "/product",
+    "/charts/pie"
+  ],
+  "name": "测试",
+  "create_time": 1578573141547,
+  "auth_name": "admin",
+  "auth_time": 1607406938634
+},{
+  "_id":"5e175a134bce5e36d48fb4db",
+  "menus": [
+    "all",
+    "/home",
+    "/products",
+    "/category",
+    "/product",
+    "/user",
+    "/role",
+    "/charts",
+    "/charts/bar",
+    "/charts/line",
+    "/charts/pie"
+  ],
+  "name": "管理员",
+  "create_time": 1578588691768,
+  "auth_name": "admin",
+  "auth_time": 1578588698490
+},{
+  "_id": "5e188bb874c89321209fedda",
+  "menus": [
+    "/home",
+    "/charts/bar",
+    "/charts",
+    "/charts/line",
+    "/charts/pie",
+    "/role"
+  ],
+  "name": "员工",
+  "create_time": 1578666936202,
+  "auth_name": "admin",
+  "auth_time": 1607330722391
+},{
+  "_id":"5fcdca798e518d46807aa484",
+  "menus": [
+    "/category"
+  ],
+  "name": "你好",
+  "create_time": 1607322233401,
+  "auth_time": 1607411041057,
+  "auth_name": "admin"
+},{
+  "_id":"5fcdcb428e518d46807aa485",
+  "menus": [],
+  "name": "哈哈哈",
+  "create_time": 1607322434116
+},{
+  "_id":"5fcdcb528e518d46807aa486",
+  "menus": [],
+  "name": "哈哈啊",
+  "create_time": 1607322450051
+},{
+  "_id": "5fcdcd638e518d46807aa488",
+  "menus": [],
+  "name": "123",
+  "create_time": 1607322979807
+}]
