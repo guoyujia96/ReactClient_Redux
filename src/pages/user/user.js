@@ -70,8 +70,10 @@ export default class User extends Component {
     }
     getUsers = async () => {
         const result = await reqUsers()
-        if (result.data.status === 0) {
-            const { users, roles } = result.data.data
+        // console.log(result)
+        if (result.status === 0) {
+            const { users, roles } = result.data
+            // console.log(users,roles)
             this.initRoleNames(roles)
             this.setState({
                 users,
@@ -97,23 +99,23 @@ export default class User extends Component {
     deleteUser = (user) => {
         Modal.confirm({
             title: `确认删除${user.username}吗?`,
-            // onOk: async () => {
-            //   const result = await reqDeleteUser(user._id)
-            //   if(result.data.status===0) {
-            //     message.success('删除用户成功!')
-            //     this.getUsers()
-            //   }
-            // }
-
-            onOk: () => {
-                const users = this.state.users
-                // console.log(users)
-                const newUsers = users.filter(item => { return item.username != user.username })
-                // console.log(newUsers)
-                this.setState({ users: newUsers })
+            onOk: async () => {
+              const result = await reqDeleteUser(user._id)
+              if(result.status===0) {
                 message.success('删除用户成功!')
-                this.user = null;
+                this.getUsers()
+              }
             }
+
+            // onOk: () => {
+            //     const users = this.state.users
+            //     // console.log(users)
+            //     const newUsers = users.filter(item => { return item.username != user.username })
+            //     // console.log(newUsers)
+            //     this.setState({ users: newUsers })
+            //     message.success('删除用户成功!')
+            //     this.user = null;
+            // }
         })
     }
 
@@ -125,7 +127,7 @@ export default class User extends Component {
 
         // 1. 收集输入数据
         const user = this.form.getFieldsValue()
-        // console.log(user)
+        console.log(user)
         this.form.resetFields()
         // 如果是更新, 需要给user指定_id属性
         if (this.user) {
@@ -133,22 +135,22 @@ export default class User extends Component {
         }
 
         // 2. 提交添加的请求
-        // const result = await reqAddOrUpdateUser(user)
-        // // 3. 更新列表显示
-        // if (result.data.status === 0) {
-        //     message.success(`${this.user ? '修改' : '添加'}用户成功`)
-        //     this.getUsers()
-        // }
-        message.success(`${this.user ? '修改' : '添加'}用户成功`)
+        const result = await reqAddOrUpdateUser(user)
+        // 3. 更新列表显示
+        if (result.status === 0) {
+            message.success(`${this.user ? '修改' : '添加'}用户成功`)
+            this.getUsers()
+        }
+        // message.success(`${this.user ? '修改' : '添加'}用户成功`)
         
-        const newUsers = users.map(item => {
-            if (item._id === user._id) {
-                item = user
-                return item
-            }
-            return item
-        })
-        this.setState({users:newUsers})
+        // const newUsers = users.map(item => {
+        //     if (item._id === user._id) {
+        //         item = user
+        //         return item
+        //     }
+        //     return item
+        // })
+        // this.setState({users:newUsers})
     }
 
     componentWillMount() {

@@ -10,7 +10,7 @@ import {
 import { PlusOutlined } from '@ant-design/icons';
 
 import LinkButton from '../../component/Link-button'
-import { reqProducts } from '../../api'
+import { reqProducts, reqSearchProducts ,reqUpdateStatus} from '../../api'
 
 const Option = Select.Option
 export default class ProductHome extends Component {
@@ -22,8 +22,8 @@ export default class ProductHome extends Component {
         loading: false, // 是否正在加载中
         searchName: '', // 搜索的关键字
         searchType: 'productName', // 根据哪个字段搜索
- 
-     
+
+
     }
 
     /*
@@ -49,7 +49,7 @@ export default class ProductHome extends Component {
                 title: '状态',
                 // dataIndex: 'status',
                 render: (product) => {
-                    const { status, _id } = product 
+                    const { status, _id } = product
                     // console.log(product)
 
                     const newStatus = status === 1 ? 2 : 1
@@ -85,48 +85,70 @@ export default class ProductHome extends Component {
         ];
     }
 
-      /*
-  更新指定商品的状态
-   */
-  updateStatus = async (productId, newStatus) => {
-    // const result = await reqUpdateStatus(productId, status)
-    // if(result.status===0) {
-    //   message.success('更新商品成功')
-    //   this.getProducts(this.pageNum)
-    // }
- 
-    const {products} = this.state
-    // console.log(products,newStatus)
-    const UpdateProducts = products.map(item => {
-        if (item._id === productId) {
-            // console.log(item)
-            item.status = newStatus
-            return item;
+    /*
+更新指定商品的状态
+ */
+    updateStatus = async (productId, status) => {
+        const result = await reqUpdateStatus(productId, status)
+        if(result.status===0) {
+          message.success('更新商品成功')
+          this.getProducts(this.pageNum)
         }
-        return item
-    })
-    // console.log(UpdateProducts)
-    this.setState({products:UpdateProducts})
-   
-    message.success('更新商品成功')
-  }
+
+        // const { products } = this.state
+        // // console.log(products,newStatus)
+        // const UpdateProducts = products.map(item => {
+        //     if (item._id === productId) {
+        //         // console.log(item)
+        //         item.status = newStatus
+        //         return item;
+        //     }
+        //     return item
+        // })
+        // console.log(UpdateProducts)
+        // this.setState({ products: UpdateProducts })
+
+
+    }
+
     getProducts = async (pageNum) => {
         this.pageNum = pageNum // 保存pageNum, 让其它方法可以看到
-        this.setState({ loading: true })
-        const result = await reqProducts();
-        this.setState({ loading: false })
-        // console.log(result.data);
-        if (result.data.status === 0) {
-            const { total, list } = result.data.data;
+        this.setState({ loading: true }) // 显示loading
+
+        const { searchName, searchType } = this.state
+        // 如果搜索关键字有值, 说明我们要做搜索分页
+        let result
+        if (searchName) {
+            result = await reqSearchProducts({ pageNum, pageSize: 3, searchName, searchType })
+        } else { // 一般分页请求
+            result = await reqProducts(pageNum, 3)
+        }
+
+        this.setState({ loading: false }) // 隐藏loading
+        if (result.status === 0) {
+            // 取出分页数据, 更新状态, 显示分页列表
+            const { total, list } = result.data
             this.setState({
                 total,
                 products: list
             })
         }
+        // this.pageNum = pageNum // 保存pageNum, 让其它方法可以看到
+        // this.setState({ loading: true })
+        // const result = await reqProducts(pageNum,3);
+        // this.setState({ loading: false })
+        // console.log(pageNum,result.data);
+        // if (result.status === 0) {
+        //     const { total, list } = result.data;
+        //     this.setState({
+        //         total,
+        //         products: list
+        //     })
+        // }
     }
 
-    getSearchProduct = () =>{
-        const {products,searchName} = this.state;
+    getSearchProduct = () => {
+        const { products, searchName } = this.state;
         // console.log(products)//14
         const arr = products.filter((item) => {
             // ES6 新增方法includes
@@ -134,18 +156,18 @@ export default class ProductHome extends Component {
         })
         // console.log(arr)//9
         this.setState({
-            products:arr,
-            total:arr.length
+            products: arr,
+            total: arr.length
         })
     }
 
     change = (event) => {
         this.setState({ searchName: event.target.value })
-        console.log("change")
-        this.getProducts();
+        // console.log("change")
+        // this.getProducts(1);
     }
     componentDidMount() {
-        this.getProducts();
+        this.getProducts(1);
     }
     render() {
         this.initColumns()
@@ -157,7 +179,7 @@ export default class ProductHome extends Component {
                     value={searchType} //设置下拉框的默认值
                     style={{ width: 150 }}
                     // select的onchange()回调有一个默认的参数是option的value
-                    onChange={value =>  this.setState({ searchType: value })}
+                    onChange={value => this.setState({ searchType: value })}
                 >
                     <Option value='productName'>按名称搜索</Option>
                     <Option value='productDesc'>按描述搜索</Option>
@@ -169,7 +191,7 @@ export default class ProductHome extends Component {
                     // input的onchange()回调的默认参数是event
                     onChange={event => this.change(event)}
                 />
-                <Button type='primary' onClick={() => this.getSearchProduct()}>搜索</Button>
+                <Button type='primary' onClick={() => this.getProducts(1)}>搜索</Button>
             </span>
         )
 
@@ -196,7 +218,7 @@ export default class ProductHome extends Component {
                         total,
                         defaultPageSize: 3,
                         showQuickJumper: true,
-                        // onChange: this.getProducts
+                        onChange: this.getProducts
 
                     }}
                 />

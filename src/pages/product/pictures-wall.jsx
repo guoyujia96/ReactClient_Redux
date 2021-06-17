@@ -1,69 +1,106 @@
 import React from 'react'
 
 import { Upload, Icon, Modal, message } from 'antd'
-import {reqDeleteImg} from "../../api/index"
+import { reqDeleteImg } from "../../api/index"
 
 
-// function getBase64(file) {
-//   return new Promise((resolve, reject) => {
-//     const reader = new FileReader();
-//     reader.readAsDataURL(file);
-//     reader.onload = () => resolve(reader.result);
-//     reader.onerror = error => reject(error);
-//   });
-// }
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 /*
 用于图片上传的组件
  */
 export default class PicturesWall extends React.Component {
 
-  
+
   state = {
     previewVisible: false, //标识是否显示大图晕染
     previewImage: '', // 大图的url
-    fileList: []
+    fileList: [
+      // {
+      //   size: 119295,
+      //   status: "done",
+      //   thumbUrl: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMg",
+      //   type: "image/jpeg",
+      //   uid: "rc-upload-1623835389273-2",
+      //   url: "http://localhost:5000/upload/image-1623835419142.jpg"
+      // }
+    ]
   };
+  constructor(props){
+    super(props)
+    let fileList = []
+
+    const {imgs} = this.props
+    if(imgs && imgs.length >0){
+      fileList = imgs.map( (img ,index) =>({
+        status: "done",
+        name:img,
+        type: "image/jpeg",
+        uid: -index,
+        url: img
+      }) )
+    }
+
+    // 初始化状态
+    this.state = {
+      previewVisible: false, // 标识是否显示大图预览Modal
+      previewImage: '', // 大图的url
+      fileList // 所有已上传图片的数组
+    }
+
+  }
 
   // 获取img名称数组的函数，数组在表单提交时使用
-  getImgs = ()=>{
+  getImgs = () => {
     return this.state.fileList.map(file => file.name)
   }
   handleCancel = () => this.setState({ previewVisible: false });
 
   handlePreview = async file => {
+    console.log("handlePreview", file)
     // 显示指定的file对应的大图
-    // if (!file.url && !file.preview) {
-    //   file.preview = await getBase64(file.originFileObj);
-    // }
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
 
     this.setState({
       previewImage: file.url || file.preview,
       previewVisible: true,
     });
   };
+  /*
+ file: 当前操作的图片文件(上传/删除)
+ fileList: 所有已上传图片文件对象的数组
+  */
   // 监视图片的status 所以上传过程中会调用不只一次
-  handleChange = async({file,fileList} ) => {
-    console.log("handlechange",file.status,fileList.length,file)
+  handleChange = async ({ file, fileList }) => {
+    console.log("handlechange", file.status, fileList.length, file)
     // 一旦上传成功，就对当前上传的文件进行修正 name url
-    if(file.status ==='done'){
+    if (file.status === 'done') {
       const result = file.response
-      if(result.status ===0){
+      if (result.status === 0) {
         message.success("上传图片成功!")
-        const {name,url} = result.data
-        file = fileList[fileList.length -1]
+        const { name, url } = result.data
+        file = fileList[fileList.length - 1]
         file.name = name;
         file.url = url;
-      }else{
+      } else {
         message.error("上传图片失败")
       }
 
-    }else if(file.status === "removed"){//只是在页面上(前台)删除图片
-      console.log("remove")
+    } else if (file.status === "removed") {//只是在页面上(前台)删除图片
+      // console.log("remove")
       const result = await reqDeleteImg(file.name)
       console.log(result)
-      if(result.data.status === 0){
+      if (result.status === 0) {
         message.success("删除图片成功!")
-      }else(
+      } else (
         message.error("删除图片失败")
       )
     }
