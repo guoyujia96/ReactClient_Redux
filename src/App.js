@@ -7,6 +7,7 @@ export default class App extends Component {
   render() {
     return (
       
+      // switch表示只匹配其中一个
         <Switch>
           <Route path="/login" component={Login}></Route>
           <Route path="/" component={Admin}></Route>

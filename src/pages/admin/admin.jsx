@@ -20,7 +20,9 @@ const { Footer, Sider, Content } = Layout;
 export default class Admin extends Component {
     render() {
         const user = memoryUtils.user
+        // 如果内存中没有user ===> 用户未登录
         if (!user || !user._id) {
+            // 在render中实现自动跳转到login
             return <Redirect to="/login" />
         }
         return (
