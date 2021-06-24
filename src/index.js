@@ -10,14 +10,6 @@ import store from "./redux/store"
 // const user = storageUtils.getUser()
 // memoryUtils.user = user
 
-
-=======
-// 读取local中保存的user，保存到内存中
-const user = storageUtils.getUser()
-memoryUtils.user = user
-
-
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>

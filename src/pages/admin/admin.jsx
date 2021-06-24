@@ -27,8 +27,8 @@ class Admin extends Component {
         // const user = memoryUtils.user
         const user = this.props.user
 
-=======
-        const user = memoryUtils.user
+
+  
         // 如果内存中没有user ===> 用户未登录
 
         if (!user || !user._id) {
