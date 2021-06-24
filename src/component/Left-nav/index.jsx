@@ -38,32 +38,7 @@ class LeftNav extends Component {
     return false
   }
 
-    // 使用map+递归调用
-    // getMenuNodes = (itemList) => {
-    //     // path 有可能是子路由
-    //     const path = this.props.location.pathname
-    //     return itemList.map((item) => {
-    //         // console.log(item.key)
-    //         if (!item.children) {
-    //             return (
-    //                 <Menu.Item key={item.key} icon={<PieChartOutlined />}>
-    //                     <Link to={item.key}>{item.title}</Link>
-    //                 </Menu.Item>
-    //             )
-    //         } else {
 
-    //             const cItem = item.children.find(cItem => path.indexOf(cItem.key)===0)
-    //             if(cItem){
-    //                 this.openKey = item.key
-    //             }
-    //             return (
-    //                 <SubMenu key={item.key} icon={<PieChartOutlined />} title={item.title}>
-    //                     {this.getMenuNodes(item.children)}
-    //                 </SubMenu>
-    //             )
-    //         }
-    //     })
-    // }
     getMenuNodes = (menuList) => {
         // 得到当前请求的路由路径
         const path = this.props.location.pathname
@@ -121,9 +96,7 @@ class LeftNav extends Component {
         // 第三个参数是一个空数组
       }
 
-    // UNSAFE_componentWillMount(){
-    //     this.menuNodes = this.getMenuNodes
-    // }
+
     render() {
       // 这一步应该放到willmount声明周期函数里，因为它只需要执行一次
        const menuNodes = this.getMenuNodes(itemList)
@@ -164,34 +137,8 @@ withRouter高阶组件:
 包装非路由组件, 返回一个新的组件
 新的组件向非路由组件传递3个属性: history/location/match
  */
-export default withRouter(LeftNav)
+export default connect(
+  state => ({user: state.user}),
+  {setHeadTitle}
+)(withRouter(LeftNav))
 
-// 静态左侧导航
-
-                          {/* <Menu.Item key="home" icon={<PieChartOutlined />}>
-                            <Link to="/home">首页</Link> 
-                        </Menu.Item>
-
-                        <SubMenu key="sub1" icon={<MailOutlined />} title="商品">
-
-                            <Menu.Item key="category" icon={<PieChartOutlined />}>
-                                <Link to="/category">品类管理</Link>
-                            </Menu.Item>
-                            <Menu.Item key="product" icon={<PieChartOutlined />}>
-                                <Link to="/product">商品管理</Link>
-                            </Menu.Item>
-
-                        </SubMenu>
-                        <Menu.Item key="user" icon={<PieChartOutlined />}>
-                            <Link to="/user">用户管理</Link>
-                        </Menu.Item>
-                        <Menu.Item key="role" icon={<PieChartOutlined />}>
-                            <Link to="/role">角色管理 </Link>
-                        </Menu.Item>
-                        <SubMenu key="sub2" icon={<MailOutlined />} title="图形图表">
-
-                            <Menu.Item key="7" icon={<PieChartOutlined />}>品类管理</Menu.Item>
-                            <Menu.Item key="8" icon={<PieChartOutlined />}>商品管理</Menu.Item>
-
-                        </SubMenu>
-                         */}
