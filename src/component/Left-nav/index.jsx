@@ -118,12 +118,14 @@ class LeftNav extends Component {
     
           return pre
         }, [])
+        // 第三个参数是一个空数组
       }
 
     // UNSAFE_componentWillMount(){
     //     this.menuNodes = this.getMenuNodes
     // }
     render() {
+      // 这一步应该放到willmount声明周期函数里，因为它只需要执行一次
        const menuNodes = this.getMenuNodes(itemList)
         let path = this.props.location.pathname
         // console.log(path)
@@ -138,47 +140,20 @@ class LeftNav extends Component {
                     <img src={Logo} alt="" />
                     <h2>后台应用</h2>
                 </Link>
-                <div >
+                
                     <Menu
                         selectedKeys={[path]}
                         defaultOpenKeys={[openkey]}
                         mode="inline"
                         theme="dark"
-
                     >
                         {
                            menuNodes
                         }
-                        {/* <Menu.Item key="1" icon={<PieChartOutlined />}>
-                            <Link to="/home">首页</Link> 
-                        </Menu.Item>
 
-                        <SubMenu key="sub1" icon={<MailOutlined />} title="商品">
-
-                            <Menu.Item key="5" icon={<PieChartOutlined />}>
-                                <Link to="/category">品类管理</Link>
-                            </Menu.Item>
-                            <Menu.Item key="6" icon={<PieChartOutlined />}>
-                                <Link to="/product">商品管理</Link>
-                            </Menu.Item>
-
-                        </SubMenu>
-                        <Menu.Item key="2" icon={<PieChartOutlined />}>
-                            <Link to="/user">用户管理</Link>
-                        </Menu.Item>
-                        <Menu.Item key="3" icon={<PieChartOutlined />}>
-                            <Link to="/role">角色管理 </Link>
-                        </Menu.Item>
-                        <SubMenu key="sub2" icon={<MailOutlined />} title="图形图表">
-
-                            <Menu.Item key="7" icon={<PieChartOutlined />}>品类管理</Menu.Item>
-                            <Menu.Item key="8" icon={<PieChartOutlined />}>商品管理</Menu.Item>
-
-                        </SubMenu>
-                         */}
 
                     </Menu>
-                </div>
+                
             </div>
         )
     }
@@ -189,7 +164,34 @@ withRouter高阶组件:
 包装非路由组件, 返回一个新的组件
 新的组件向非路由组件传递3个属性: history/location/match
  */
-export default connect(
-  state => ({user:state.user}),
-  {setHeadTitle}
-)(withRouter(LeftNav))
+export default withRouter(LeftNav)
+
+// 静态左侧导航
+
+                          {/* <Menu.Item key="home" icon={<PieChartOutlined />}>
+                            <Link to="/home">首页</Link> 
+                        </Menu.Item>
+
+                        <SubMenu key="sub1" icon={<MailOutlined />} title="商品">
+
+                            <Menu.Item key="category" icon={<PieChartOutlined />}>
+                                <Link to="/category">品类管理</Link>
+                            </Menu.Item>
+                            <Menu.Item key="product" icon={<PieChartOutlined />}>
+                                <Link to="/product">商品管理</Link>
+                            </Menu.Item>
+
+                        </SubMenu>
+                        <Menu.Item key="user" icon={<PieChartOutlined />}>
+                            <Link to="/user">用户管理</Link>
+                        </Menu.Item>
+                        <Menu.Item key="role" icon={<PieChartOutlined />}>
+                            <Link to="/role">角色管理 </Link>
+                        </Menu.Item>
+                        <SubMenu key="sub2" icon={<MailOutlined />} title="图形图表">
+
+                            <Menu.Item key="7" icon={<PieChartOutlined />}>品类管理</Menu.Item>
+                            <Menu.Item key="8" icon={<PieChartOutlined />}>商品管理</Menu.Item>
+
+                        </SubMenu>
+                         */}

@@ -22,9 +22,12 @@ import {connect} from "react-redux"
 const { Footer, Sider, Content } = Layout;
 class Admin extends Component {
     render() {
+
         // const user = memoryUtils.user
         const user = this.props.user
+
         if (!user || !user._id) {
+            // 在render中实现自动跳转到login
             return <Redirect to="/login" />
         }
         return (

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Card, Input, Cascader, Upload, Form, Button, message } from "antd"
 import { ArrowLeftOutlined } from "@ant-design/icons"
 import LinkButton from "../../component/Link-button"
-import { reqCategorys } from "../../api/index"
+import { reqCategorys ,reqAddOrUpdateProduct} from "../../api/index"
 import PicturesWall from "./pictures-wall"
 import RichTextEditor from "./rich-text-editor"
 
@@ -16,17 +16,49 @@ export default class AddUpdate extends Component {
         options: []
     }
 
+    // 创建一个容器
     myRef = React.createRef()
     editor = React.createRef()
-    onFinish = (value) => {
+    onFinish =async (values) => {
         //提交表单且数据验证成功后回调事件
         // console.log(value)
         // message.success("成功")
         // alert("添加成功，" + value.name +","+ value.price+","+value.desc)
-        const imgS = this.myRef.current.getImgs()
+        
+        // 1. 收集数据, 并封装成product对象
+        const {name, desc, price, categoryIds} = values
+        let pCategoryId, categoryId
+        if (categoryIds.length===1) {
+          pCategoryId = '0'
+          categoryId = categoryIds[0]
+        } else {
+          pCategoryId = categoryIds[0]
+          categoryId = categoryIds[1]
+        }
+        const imgs = this.myRef.current.getImgs()
         const detail = this.editor.current.getDetail()
+
+        const product = {name, desc, price, imgs, detail, pCategoryId, categoryId}
+
+        console.log(product)
+        // 如果是更新, 需要添加_id
+        if(this.isUpdate) {
+            product._id = this.product._id
+          }
+  
+          // 2. 调用接口请求函数去添加/更新
+          const result = await reqAddOrUpdateProduct(product)
+  
+          console.log(result)
+          // 3. 根据结果提示
+          if (result.status===0) {
+            message.success(`${this.isUpdate ? '更新' : '添加'}商品成功!`)
+            this.props.history.goBack()
+          } else {
+            message.error(`${this.isUpdate ? '更新' : '添加'}商品失败!`)
+          }
         // console.log(detail)
-        message.success(this.isUpdate? "更新商品信息成功":"添加商品信息成功")
+        // message.success(this.isUpdate? "更新商品信息成功":"添加商品信息成功")
 
     }
 
@@ -154,15 +186,15 @@ export default class AddUpdate extends Component {
         return (
             <Card title={title}>
                 <Form {...formItemLayout} onFinish={this.onFinish}>
-                    <Item initialValue={product.name} label="商品名称" name="name" rules={[{ required: true }]}>
+                    <Item initialValue={product.name} label="商品名称" name="name" rules={[{ required: true ,message:"必须输入商品名称"}]}>
                         <Input placeholder='请输入商品名称' />
                     </Item>
-                    <Item initialValue={product.desc} label="商品描述" name="desc" rules={[{ required: true }]}>
+                    <Item initialValue={product.desc} label="商品描述" name="desc" rules={[{ required: true ,message:"必须输入商品描述"}]}>
                         <TextArea placeholder="请输入商品描述" autosize={{ minRows: 2, maxRows: 6 }} />
                     </Item>
                     <Item initialValue={product.price} label="商品价格" name="price"
                         rules={[
-                            { required: true },
+                            { required: true,message:"必须输入商品价格" },
                             // 自定义验证价格的函数
                             {
                                 validator(_, value) {
@@ -175,7 +207,7 @@ export default class AddUpdate extends Component {
                         ]}>
                         <Input type='number' placeholder='请输入商品价格' addonAfter='元' />
                     </Item>
-                    <Item label="商品分类" name="categoryIds" initialValue={categoryIds}>
+                    <Item label="商品分类" name="categoryIds" initialValue={categoryIds} rules={[{ required: true ,message:"必须输入商品分类"}]}>
                         {/* cascader：级联选择 */}
                         <Cascader
                             placeholder='请指定商品分类'

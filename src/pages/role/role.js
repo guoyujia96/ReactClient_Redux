@@ -46,7 +46,7 @@ class Role extends Component {
     getRoles = async () => {
         const result = await reqRoles()
         // console.log(result)
-        if (result.status === 200) {
+        if (result.status === 0) {
             const roles = result.data
             this.setState({
                 roles
@@ -56,7 +56,7 @@ class Role extends Component {
 
     onRow = (role) => {
         return {
-            onClick: () => {
+            onClick: event => {
                 // console.log(role)
                 this.setState({ role })
             }
@@ -64,7 +64,6 @@ class Role extends Component {
     }
 
     addRole = () => {
-
         // 进行表单验证，验证过了才进行后面操作
         this.form.validateFields().then(async values => {
             // 隐藏 添加 的对话框（modal）
@@ -74,22 +73,20 @@ class Role extends Component {
             // 解构赋值
             const { roleName } = values;
             //清空数据:好像会自动清空？
-            // this.form.resetFields();
+            this.form.resetFields();
             // console.log(roleName)
             //请求添加
             const result = await reqAddRole(roleName)
-            if (result.data.status === 0) {
+            if (result.status === 0) {
                 // console.log(result.data)
-                const roleData = result.data.data
-                // console.log(roleData)
+                const role = result.data
+                console.log(role)
                 message.success("添加角色成功")
                 // //重新获取角色列表
                 // this.getRoles()
-                const roles = this.state.roles
-                // console.log(roles)
-                // roles.push(roleData)
-                // console.log(roles)
-                this.setState({ roles: [roleData, ...roles] })
+                this.setState( state => ({
+                    roles: [...state.roles,role] 
+                }))
                 // 比较推荐的写法如下:原生的setState的参数是一个回调函数
                 // this.setState((state,props) => {
                 //     roles:[...state.roles,roleData]
@@ -103,7 +100,7 @@ class Role extends Component {
 
     }
 
-    updateRole = () => {
+    updateRole = async() => {
         const role = this.state.role
         const menus = this.auth.current.getMenus()
         role.menus = menus
@@ -115,10 +112,24 @@ class Role extends Component {
         this.setState({
             isShowAuth: false
         })
-        message.success('当前用户角色权限成功')
-        this.setState({
-            roles: [...this.state.roles]
-        })
+        const result = await reqUpdateRole(role)
+        if(result.status === 0){
+            if (role._id === memoryUtils.user.role_id) {
+                memoryUtils.user = {}
+                storageUtils.removeUser()
+                this.props.history.replace('/login')
+                message.success('当前用户角色权限成功')
+              } else {
+                message.success('设置角色权限成功')
+                this.setState({
+                  roles: [...this.state.roles]
+                })
+              }
+        }
+        
+        // this.setState({
+        //     roles: [...this.state.roles]
+        // })
         // 如果当前更新的是自己的权限，强制退出
         if (role._id === this.props.user.role_id) {
             // memoryUtils.user = {}
@@ -132,6 +143,7 @@ class Role extends Component {
               roles: [...this.state.roles]
             })
           }
+        
         // // 请求更新
         // const result = await reqUpdateRole(role)
         // if (result.data.status === 0) {
@@ -165,7 +177,7 @@ class Role extends Component {
         const { roles, role, isShowAdd, isShowAuth } = this.state
         const title = (
             <span>
-                <Button type="primary" onClick={() => this.setState({ isShowAdd: true })}>创建角色</Button>&nbsp;&nbsp;
+                <Button type="primary" onClick={() => this.setState({ isShowAdd: true })}>添加角色</Button>&nbsp;&nbsp;
                 <Button type="primary" disabled={!role._id} onClick={() => this.setState({ isShowAuth: true })}>设置角色权限</Button>
             </span>
         )

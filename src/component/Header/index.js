@@ -6,7 +6,7 @@ import storageUtils from "../../utils/storageUtils"
 import { withRouter } from 'react-router'
 import menuList from "../../config/menuConfig"
 import {formateDate} from "../../utils/dateUtils"
-import {reqWeather} from '../../api'
+import {reqWeather,reqIP} from '../../api'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import LinkButton from "../Link-button"
 
@@ -30,27 +30,35 @@ class Header extends Component {
         this.timer = setInterval(() => {
             this.setState({currentTime:formateDate(Date.now())})
         }, 1000);
-
-        this.getWeather()
+        this.getIP()
+        // this.getWeather()
     }
+    //在当前组件卸载之前关闭定时器
     componentWillUnmount(){
         clearInterval(this.timer)
     }
 
-    getWeather = async () => {
-        const {province,city,weather,temperature} = await reqWeather("110101")
+    getIP = async () => {
+        const {adcode} = await reqIP()
+        // console.log(province,city,weather,temperature)
+        // this.setState({adcode})
+        this.getWeather(adcode)
+    }
+    getWeather = async (adcode) => {
+        const {province,city,weather,temperature} = await reqWeather(adcode)
         // console.log(province,city,weather,temperature)
         this.setState({province,city,weather,temperature})
     }
 
     getTitle = () =>{
+        // 获取当前请求路径
         const path = this.props.location.pathname
         let title
         menuList.forEach(item => {
             if (item.key===path) {
                 title = item.title
             }else if(item.children){
-                const cItem = item.children.find(cItem => cItem.key===path)
+                const cItem = item.children.find(cItem => path.indexOf(cItem.key) === 0)
                 if(cItem){
                     title = cItem.title
                 }
