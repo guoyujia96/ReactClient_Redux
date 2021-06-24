@@ -6,7 +6,10 @@ import AddForm from "./add-form"
 import AuthForm from "./auth-form"
 import memoryUtils from "../../utils/memoryUtils"
 import storageUtils from "../../utils/storageUtils";
-export default class Role extends Component {
+import {connect} from 'react-redux'
+import {logout} from '../../redux/actions'
+
+class Role extends Component {
 
     auth = React.createRef()
     state = {
@@ -102,7 +105,8 @@ export default class Role extends Component {
         const menus = this.auth.current.getMenus()
         role.menus = menus
         role.auth_time = Date.now()
-        role.auth_name = memoryUtils.user.username
+        // role.auth_name = memoryUtils.user.username
+        role.auth_name = this.props.user.username
 
         // 隐藏确认框
         this.setState({
@@ -127,6 +131,20 @@ export default class Role extends Component {
         //     roles: [...this.state.roles]
         // })
         // 如果当前更新的是自己的权限，强制退出
+
+        if (role._id === this.props.user.role_id) {
+            // memoryUtils.user = {}
+            // storageUtils.removeUser()
+            this.props.logout()
+            // this.props.history.replace('/login')
+            message.success('当前用户角色权限成功')
+          } else {
+            message.success('设置角色权限成功')
+            this.setState({
+              roles: [...this.state.roles]
+            })
+          }
+
         
         // // 请求更新
         // const result = await reqUpdateRole(role)
@@ -214,3 +232,8 @@ export default class Role extends Component {
         )
     }
 }
+
+export default connect(
+    state => ({user: state.user}),
+    {logout}
+  )(Role)

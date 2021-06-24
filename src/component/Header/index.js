@@ -10,6 +10,8 @@ import {reqWeather,reqIP} from '../../api'
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import LinkButton from "../Link-button"
 
+import {connect} from "react-redux"
+import {logout} from '../../redux/actions'
 
 const { confirm } = Modal;
 
@@ -73,10 +75,12 @@ class Header extends Component {
             onOk: ()=> {
             //   console.log('确定');
                 // 删除保存的数据
-                memoryUtils.user = {}
-                storageUtils.removeUser()
+                // memoryUtils.user = {}
+                // storageUtils.removeUser()
+                this.props.logout()
                 //跳转到登录页面
-                this.props.history.replace('/login')
+                // this.props.history.replace('/login')
+  
             },
             
           });
@@ -84,8 +88,10 @@ class Header extends Component {
 
     render() {
         const {currentTime,province,city,weather,temperature} = this.state
-        const {username} = memoryUtils.user
-        const title = this.getTitle()
+        // const {username} = memoryUtils.user
+        const username = this.props.user.username
+        // const title = this.getTitle()
+        const title = this.props.headTitle
         return (
             <div className="header">
                 <div className="header-top">
@@ -104,4 +110,7 @@ class Header extends Component {
         )
     }
 }
-export default withRouter(Header)
+export default connect(
+    state => ({headTitle:state.headTitle,user:state.user}),
+    {logout}
+)(withRouter(Header))

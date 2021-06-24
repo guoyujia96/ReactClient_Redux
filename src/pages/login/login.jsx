@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import { Form, Input, Button, message } from 'antd'
-import {regLogin} from "../../api/index"
+
 import "./index.less"
 import logo from "../../assets/image/logo.png"
-import memoryUtils from '../../utils/memoryUtils'
-import storageUtils from '../../utils/storageUtils'
+import memoryUtils from "../../utils/memoryUtils"
 import { Redirect } from 'react-router'
+import {regLogin} from "../../api/index"
+import storageUtils from "../../utils/storageUtils"
+import {connect} from "react-redux"
+import { login} from "../../redux/actions"
 
 const layout = {
     labelCol: {
@@ -21,11 +24,33 @@ const layout = {
       span: 16,
     },
   };
-export default class Login extends Component {
+   class Login extends Component {
   
      onFinish = (values) => {
         // console.log('Success:', values);
         const {username,password} = values;
+        // console.log(username,password)
+        // 调用分发异步action的函数
+        this.props.login(username,password)
+        // regLogin(username,password).then(response => {
+        //     console.log("成功了",response.data)//返回的数据包含status和data
+        //     const result = response.data
+        //     if(result.status === 0){
+        //         // 登陆成功
+        //         message.success("登录成功")
+        //         console.log(result.data)
+        //         // 跳转之前保存数据到内存中
+        //         memoryUtils.user = result.data//id username password
+        //         storageUtils.saveUser(result.data)//id username password
+        //         // 跳转到管理界面:因为不需要回退，所以不要push()用replace()
+        //         this.props.history.replace('/home')
+        //     }else{
+        //         // 登录失败，提示错误信息
+        //         message.error(result.msg)
+        //     }
+        // }).catch(error => {
+        //     console.log("失败了",error)
+        // }); // alt + <= 回退
         regLogin(username,password).then(response => {
             console.log("成功了",response)//返回的数据包含status和data
             const result = response
@@ -51,14 +76,16 @@ export default class Login extends Component {
        onFinishFailed = (errorInfo) => {
         console.log('校验Failed:', errorInfo);
       };
+
     render() {
 
         // 如果已经登录，自动跳转到管理页面
-        const user = memoryUtils.user
+        // const user = memoryUtils.user
+        const user = this.props.user
         if(user && user._id){
-            return <Redirect to="/"/>
+            return <Redirect to="/home"/>
         }
-
+        
         return (
             <div className="login">
                 <header className="login-header">
@@ -66,6 +93,7 @@ export default class Login extends Component {
                     <h1>React项目: 后台管理系统</h1>
                 </header>
                 <section className="login-content">
+                <div className={user.errorMsg ? 'error-msg show' : 'error-msg'}>{user.errorMsg}</div>
                     <h2>用户登录</h2>
                     <Form
                         {...layout}
@@ -127,6 +155,10 @@ export default class Login extends Component {
         )
     }
 }
+export default connect(
+    state => ({user:state.user}),
+    {login}
+)(Login)
 /*
 1. 高阶函数
     1). 一类特别的函数（满足一点即可）
@@ -162,4 +194,5 @@ async和await
     在返回promise的表达式左侧写await: 不想要promise, 想要promise异步执行的成功的value数据
 3. 哪里写async?
     await所在函数(最近的)定义的左侧写async
+ */
  */
