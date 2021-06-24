@@ -70,9 +70,7 @@ class Role extends Component {
             this.setState({ isShowAdd: false })
             //收集数据
             // const roleName = this.form.getFieldValue("roleName")
-            // 解构赋值
             const { roleName } = values;
-            //清空数据:好像会自动清空？
             this.form.resetFields();
             // console.log(roleName)
             //请求添加
@@ -87,7 +85,7 @@ class Role extends Component {
                 this.setState( state => ({
                     roles: [...state.roles,role] 
                 }))
-                // 比较推荐的写法如下:原生的setState的参数是一个回调函数
+                // 原生的setState的参数是一个回调函数
                 // this.setState((state,props) => {
                 //     roles:[...state.roles,roleData]
                 // })
@@ -144,27 +142,6 @@ class Role extends Component {
               roles: [...this.state.roles]
             })
           }
-
-        
-        // // 请求更新
-        // const result = await reqUpdateRole(role)
-        // if (result.data.status === 0) {
-        //     // this.getRoles()
-        //     // 如果当前更新的是自己角色的权限, 强制退出
-        //     if (role._id === memoryUtils.user.role_id) {
-        //         memoryUtils.user = {}
-        //         storageUtils.removeUser()
-        //         this.props.history.replace('/login')
-        //         message.success('当前用户角色权限成功')
-        //     } else {
-        //         message.success('设置角色权限成功')
-        //         this.setState({
-        //             roles: [...this.state.roles]
-        //         })
-        //     }
-
-        // }
-
     }
 
     componentWillMount() {

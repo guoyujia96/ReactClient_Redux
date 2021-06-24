@@ -106,16 +106,6 @@ export default class User extends Component {
                 this.getUsers()
               }
             }
-
-            // onOk: () => {
-            //     const users = this.state.users
-            //     // console.log(users)
-            //     const newUsers = users.filter(item => { return item.username != user.username })
-            //     // console.log(newUsers)
-            //     this.setState({ users: newUsers })
-            //     message.success('删除用户成功!')
-            //     this.user = null;
-            // }
         })
     }
 
@@ -141,16 +131,6 @@ export default class User extends Component {
             message.success(`${this.user ? '修改' : '添加'}用户成功`)
             this.getUsers()
         }
-        // message.success(`${this.user ? '修改' : '添加'}用户成功`)
-        
-        // const newUsers = users.map(item => {
-        //     if (item._id === user._id) {
-        //         item = user
-        //         return item
-        //     }
-        //     return item
-        // })
-        // this.setState({users:newUsers})
     }
 
     componentWillMount() {

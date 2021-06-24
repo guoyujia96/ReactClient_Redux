@@ -20,30 +20,7 @@ export default class Category extends Component {
         parentName: '',//当前需要显示的分类列表的父分类名称
         showStatus: 0 //标识添加/更新的确认框是否显示，0：都不显示，1：显示添加 2：显示更新
     }
-    // columns = [
-    //     {
-    //         title: '分类名称',
-    //         dataIndex: 'name',//显示对应属性名的数据
-    //         key: 'name',
-    //     },
-    //     {
-    //         title: '操作',
-    //         width: 300,
-    //         dataIndex: '',
-    //         key: 'age',
-    //         //   返回需要显示的界面标签
-    //         render: (category) => (
-    //             <span>
-    //                 <LinkButton onClick={() => this.showUpdate(category)}>修改分类</LinkButton>
-    //                 {/* 如何向事件回调函数传递参数：先定义一个匿名函数，在函数体中调用处理函数并传入参数 */}
-    //                 {
-    //                     this.state.parentId === '0' ? <LinkButton onClick={() => { this.showSubCategorys(category) }}>查看子分类</LinkButton> : null
-    //                 }
-    //             </span>
-    //         )
-    //     },
-
-    // ];
+   
     initColumns = () => {
         this.columns = [
             {
@@ -102,15 +79,12 @@ export default class Category extends Component {
     showSubCategorys = (category) => {
 
         // setState()是异步更新状态，setState完不能立即读取更新后的状态
-        // 异步更新状态就是把这个函数的代码全
         //先更新状态
         this.setState({
             parentId: category._id,
             parentName: category.name
         }, () => {
-            // 在状态更新且重新render()后执行
-            console.log("3 ------  ", this.state.parentId)// 
-
+            // 在状态更新且重新render()后执行 
             // 获取二级分类列表
             this.getCategory()
         })
@@ -171,18 +145,6 @@ export default class Category extends Component {
         }
         })
         
-        // if (parentId === '0') {
-        //     this.getCategory()
-        //     // const {categorys} = this.state
-        //     // const newC = [{name:categoryName,parentId:'0',_id:"a"},...categorys]
-        //     // console.log(newC)
-        //     // this.setState({categorys:newC})
-
-        //     message.success("商品品类添加成功")
-        // }
-
-
-
     }
     // 确认更新分类的回调
     updateCategory =() => {
@@ -209,33 +171,13 @@ export default class Category extends Component {
                     // 3. 重新显示列表
                     this.getCategory()
                   }
-                //重新显示列表
-                // this.getCategory()
-                // this.category.name = categoryName
-                // debugger
-                // const { categorys } = this.state;
-                // // console.log(categorys)
-                // const newCategory = categorys.map(item => {
-                //     // console.log(item._id)
-                //     // console.log(categoryId)
-                //     if (item._id === categoryId) {
-                //         item.name = categoryName
-                //         // console.log(item)
-                //         return item
-                //     }
-                //     return item
-                // })
-                // this.setState({ categorys: newCategory })
+              
 
 
 
                 // 清除输入的数据
                 this.form.resetFields()
             })
-
-
-
-
 
 
     }
@@ -259,8 +201,6 @@ export default class Category extends Component {
     }
 
     render() {
-
-
         // 读取对应分类
         // category是在showUpdate中才保存的，第一次render的时候是undefined
         const category = this.category || {} // 如果还没有指定一个空对象

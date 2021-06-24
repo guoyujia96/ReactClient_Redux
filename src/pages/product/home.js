@@ -94,21 +94,6 @@ export default class ProductHome extends Component {
           message.success('更新商品成功')
           this.getProducts(this.pageNum)
         }
-
-        // const { products } = this.state
-        // // console.log(products,newStatus)
-        // const UpdateProducts = products.map(item => {
-        //     if (item._id === productId) {
-        //         // console.log(item)
-        //         item.status = newStatus
-        //         return item;
-        //     }
-        //     return item
-        // })
-        // console.log(UpdateProducts)
-        // this.setState({ products: UpdateProducts })
-
-
     }
 
     getProducts = async (pageNum) => {
@@ -133,18 +118,7 @@ export default class ProductHome extends Component {
                 products: list
             })
         }
-        // this.pageNum = pageNum // 保存pageNum, 让其它方法可以看到
-        // this.setState({ loading: true })
-        // const result = await reqProducts(pageNum,3);
-        // this.setState({ loading: false })
-        // console.log(pageNum,result.data);
-        // if (result.status === 0) {
-        //     const { total, list } = result.data;
-        //     this.setState({
-        //         total,
-        //         products: list
-        //     })
-        // }
+  
     }
 
     getSearchProduct = () => {

@@ -14,10 +14,6 @@ import jsonp from "jsonp"
 import { message } from "antd"
 import "../assets/data/categorys.json"
 
-
-// export function regLogin(){
-//     return ajax("/login",{username,password},"POST")
-// }
 const BASE = ''
 // 登录
 export const regLogin = (username, password) => ajax("/login", { username, password }, "POST")
@@ -131,26 +127,3 @@ jsonp解决ajax跨域的原理
       收到响应自动执行函数调用的js代码, 也就执行了提前定义好的回调函数, 并得到了需要的结果数据
  */
 
-// reqCategorys('0')
-
-// 登录
-// export const regLogin = (username, password) => ajax("https://3c78cf85-716c-4f10-8496-8dfb511b10ff.mock.pstmn.io/login", { username, password }, "POST")
-// // 添加分类
-// export const reqAddCategory = (parentId,categoryName) => ajax("../assets/data/categorys.json",{parentId,categoryName}, "POST")
-// // 更新分类
-// export const reqUpdateCategory = ({categoryId,categoryName}) => ajax("../assets/data/categorys.json",{categoryId,categoryName}, "POST")
-// // 获取商品分页列表
-// export const reqProducts = (pageNum, pageSize) => ajax('https://3c78cf85-716c-4f10-8496-8dfb511b10ff.mock.pstmn.io/product/list', {pageNum, pageSize})
-// // 删除指定用户
-// export const reqDeleteUser = (userId) => ajax('/manage/user/delete', {userId}, 'POST')
-// // 添加/更新用户
-// export const reqAddOrUpdateUser = (user) => ajax('/manage/user/'+(user._id ? 'update' : 'add'), user, 'POST')
-// // 获取所有用户的列表
-// // export const reqUsers = () => ajax('/manage/user/list')
-// export const reqUsers = () => ajax('https://3c78cf85-716c-4f10-8496-8dfb511b10ff.mock.pstmn.io/user/list')
-// // 获取所有角色的列表
-// export const reqRoles = () => ajax('https://3c78cf85-716c-4f10-8496-8dfb511b10ff.mock.pstmn.io/role/list')
-// // 添加角色
-// export const reqAddRole = (roleName) => ajax('/manage/role/add', {roleName}, 'POST')
-// // 添加角色
-// export const reqUpdateRole = (role) => ajax('/manage/role/update', role, 'POST')

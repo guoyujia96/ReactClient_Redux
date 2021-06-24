@@ -27,14 +27,5 @@ export default function ajax(url, data = {}, method = "GET") {
     }).catch(error => {
         message.error("请求出错了" + error)
     })
-    })
-    
-    // if(method ==='GET'){
-    //     return axios.get(url,{
-    //         params:data
-    //     })
-    // }else{
-    //     return axios.post(url,data)
-    // }
-    
+    }) 
 }

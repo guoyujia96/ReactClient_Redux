@@ -21,10 +21,7 @@ export default class AddUpdate extends Component {
     editor = React.createRef()
     onFinish =async (values) => {
         //提交表单且数据验证成功后回调事件
-        // console.log(value)
-        // message.success("成功")
-        // alert("添加成功，" + value.name +","+ value.price+","+value.desc)
-        
+        // console.log(value)     
         // 1. 收集数据, 并封装成product对象
         const {name, desc, price, categoryIds} = values
         let pCategoryId, categoryId
@@ -58,7 +55,7 @@ export default class AddUpdate extends Component {
             message.error(`${this.isUpdate ? '更新' : '添加'}商品失败!`)
           }
         // console.log(detail)
-        // message.success(this.isUpdate? "更新商品信息成功":"添加商品信息成功")
+
 
     }
 
@@ -94,9 +91,8 @@ export default class AddUpdate extends Component {
     };
 
 
-    // async函数的返回值是一个promise对象，promise的结果喝值由async的结果觉得
+    // async函数的返回值是一个promise对象，promise的结果值由async的结果决定
     getCategorys = async (parentId) => {
-        // console.log("1   " + this.state.parentId)
         // 发异步ajax请求获取数据
         const result = await reqCategorys(parentId)
         // console.log(result.data)

@@ -45,7 +45,6 @@ export default class AddForm extends Component {
                 </Item>
 
                 <Item
-                    // label="categoryName"
                     name="categoryName"
                     rules={[
                         {

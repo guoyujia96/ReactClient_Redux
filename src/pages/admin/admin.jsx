@@ -26,11 +26,8 @@ class Admin extends Component {
 
         // const user = memoryUtils.user
         const user = this.props.user
-
-
   
         // 如果内存中没有user ===> 用户未登录
-
         if (!user || !user._id) {
             // 在render中实现自动跳转到login
             return <Redirect to="/login" />

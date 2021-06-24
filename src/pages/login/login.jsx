@@ -51,26 +51,7 @@ const layout = {
         // }).catch(error => {
         //     console.log("失败了",error)
         // }); // alt + <= 回退
-        regLogin(username,password).then(response => {
-            console.log("成功了",response)//返回的数据包含status和data
-            const result = response
-            if(result.status === 0){
-                // 登陆成功
-                message.success("登录成功")
-                console.log(result.data)
-                // 跳转之前保存数据到内存中
-                memoryUtils.user = result.data//id username password
-                storageUtils.saveUser(result.data)//id username password
-                // 通过js实现页面跳转，在事件回调函数里的跳转
-                // 跳转到管理界面:因为不需要回退，所以不要push()用replace()
-                this.props.history.replace('/')
-            }else{
-                // 登录失败，提示错误信息
-                message.error(result.msg)
-            }
-        }).catch(error => {
-            console.log("失败了",error)
-        }); // alt + <= 回退
+        
       };
     
        onFinishFailed = (errorInfo) => {

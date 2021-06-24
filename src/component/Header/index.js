@@ -1,8 +1,6 @@
 import {Modal } from 'antd'
 import React, { Component } from 'react'
 import "./index.css"
-import memoryUtils from "../../utils/memoryUtils"
-import storageUtils from "../../utils/storageUtils"
 import { withRouter } from 'react-router'
 import menuList from "../../config/menuConfig"
 import {formateDate} from "../../utils/dateUtils"
