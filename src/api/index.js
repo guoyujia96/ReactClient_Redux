@@ -11,8 +11,8 @@ import "../assets/data/categorys.json"
 //     return ajax("/login",{username,password},"POST")
 // }
 // 登录
-// export const regLogin = (username, password) => ajax("https://3c78cf85-716c-4f10-8496-8dfb511b10ff.mock.pstmn.io/login", { username, password }, "POST")
-export const regLogin = (username, password) => ajax("/login", { username, password }, "POST")
+export const regLogin = (username, password) => ajax("https://3c78cf85-716c-4f10-8496-8dfb511b10ff.mock.pstmn.io/login", { username, password }, "POST")
+// export const regLogin = (username, password) => ajax("/login", { username, password }, "POST")
 // 添加用户
 export const reqAddUser = user => ajax('/manage/user/add', user, "POST")
 // 获取分类列表

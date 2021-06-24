@@ -8,6 +8,8 @@ import Logo from "../../assets/image/logo.png"
 import itemList from "../../config/menuConfig"
 import memoryUtils from "../../utils/memoryUtils";
 
+import {connect} from "react-redux"
+import {setHeadTitle} from '../../redux/actions'
 
 const { SubMenu } = Menu;
 
@@ -20,8 +22,8 @@ class LeftNav extends Component {
   hasAuth = (item) => {
     const {key, isPublic} = item
 
-    const menus = memoryUtils.user.role.menus
-    const username = memoryUtils.user.username
+    const menus = this.props.user.role.menus
+    const username = this.props.user.username
     /*
     1. 如果当前用户是admin
     2. 如果当前item是公开的
@@ -70,11 +72,17 @@ class LeftNav extends Component {
     
           // 如果当前用户有item对应的权限, 才需要显示对应的菜单项
           if (this.hasAuth(item)) {
+
             // 向pre添加<Menu.Item>
             if(!item.children) {
+              // 判断item是否是当前对应的item
+          if (item.key===path || path.indexOf(item.key)===0) {
+            // 更新redux中的headerTitle状态
+            this.props.setHeadTitle(item.title)
+          }
               pre.push((
-                <Menu.Item key={item.key} icon={<PieChartOutlined />}>
-                  <Link to={item.key}>
+                <Menu.Item  key={item.key} icon={<PieChartOutlined />}>
+                  <Link to={item.key} onClick={() => this.props.setHeadTitle(item.title)}>
                    
                     <span>{item.title}</span>
                   </Link>
@@ -181,4 +189,7 @@ withRouter高阶组件:
 包装非路由组件, 返回一个新的组件
 新的组件向非路由组件传递3个属性: history/location/match
  */
-export default withRouter(LeftNav)
+export default connect(
+  state => ({user:state.user}),
+  {setHeadTitle}
+)(withRouter(LeftNav))

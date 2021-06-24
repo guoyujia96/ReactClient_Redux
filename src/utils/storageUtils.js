@@ -12,7 +12,7 @@ export default{
     // 读取
     getUser(){
         // return JSON.parse(localStorage.getItem(USER_KEY) || '{}')
-        return store.get(USER_KEY || {})
+        return store.get(USER_KEY )|| {}
     },
     // 删除
     removeUser(){
