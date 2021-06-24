@@ -131,6 +131,7 @@ class Role extends Component {
         //     roles: [...this.state.roles]
         // })
         // 如果当前更新的是自己的权限，强制退出
+
         if (role._id === this.props.user.role_id) {
             // memoryUtils.user = {}
             // storageUtils.removeUser()
@@ -143,6 +144,7 @@ class Role extends Component {
               roles: [...this.state.roles]
             })
           }
+
         
         // // 请求更新
         // const result = await reqUpdateRole(role)
