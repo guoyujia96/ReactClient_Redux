@@ -8,7 +8,7 @@ import {
     RESET_USER
   } from './action-types'
 import {regLogin} from "../api/index"
-import storageUtils from "../utils/storageUtils";
+
 import memoryUtiles from "../utils/memoryUtils"
 import cookie from "react-cookies"
 
@@ -19,9 +19,9 @@ import cookie from "react-cookies"
  */
 export const logout = () =>  {
     // 删除local中的user
-    storageUtils.removeUser()
+    // storageUtils.removeUser()
     memoryUtiles.user = {};
-    cookie.remove('userId')
+    cookie.remove('userInfo')
     // 返回action对象
     return {type: RESET_USER}
   }
@@ -53,7 +53,7 @@ export const login = (username, password) => {
         const user = result.data
         console.log(user)
         // 保存local中
-        storageUtils.saveUser(user)
+        // storageUtils.saveUser(user)
         memoryUtiles.user = user;
         // 分发接收用户的同步action
         dispatch(receiveUser(user))
