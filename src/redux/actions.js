@@ -9,6 +9,10 @@ import {
   } from './action-types'
 import {regLogin} from "../api/index"
 import storageUtils from "../utils/storageUtils";
+import memoryUtiles from "../utils/memoryUtils"
+import cookie from "react-cookies"
+
+
 
 /*
 退出登陆的同步action
@@ -16,6 +20,8 @@ import storageUtils from "../utils/storageUtils";
 export const logout = () =>  {
     // 删除local中的user
     storageUtils.removeUser()
+    memoryUtiles.user = {};
+    cookie.remove('userId')
     // 返回action对象
     return {type: RESET_USER}
   }
@@ -41,11 +47,14 @@ export const login = (username, password) => {
       // 1. 执行异步ajax请求
     //   console.log(username, password)
       const result = await regLogin(username, password)  // {status: 0, data: user} {status: 1, msg: 'xxx'}
+      
       // 2.1. 如果成功, 分发成功的同步action
-      if(result.data.status===0) {
-        const user = result.data.data
+      if(result.status===0) {
+        const user = result.data
+        console.log(user)
         // 保存local中
         storageUtils.saveUser(user)
+        memoryUtiles.user = user;
         // 分发接收用户的同步action
         dispatch(receiveUser(user))
       } else { // 2.2. 如果失败, 分发失败的同步action

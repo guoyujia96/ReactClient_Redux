@@ -34,7 +34,6 @@ class LeftNav extends Component {
     } else if(item.children){ // 4. 如果当前用户有此item的某个子item的权限
       return !!item.children.find(child =>  menus.indexOf(child.key)!==-1)
     }
-
     return false
   }
 
