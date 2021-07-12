@@ -1,6 +1,7 @@
 // 用来根据现有的state和指定的action生成并返回新的state的函数
 import {combineReducers} from "redux"
 import storageUtils from "../utils/storageUtils"
+import memoryUtils from "../utils/memoryUtils"
 import {
     SET_HEAD_TITLE,
     RECEIVE_USER,
@@ -24,7 +25,8 @@ function headTitle(state=initHeadTitle,action){
 /*
 用来管理当前登陆用户的reducer函数
  */
-const initUser = storageUtils.getUser()
+// const initUser = storageUtils.getUser()
+const initUser = memoryUtils.user
 
 function user(state = initUser, action) {
   switch (action.type) {

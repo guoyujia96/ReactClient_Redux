@@ -24,7 +24,7 @@ const { Footer, Sider, Content } = Layout;
 class Admin extends Component {
     render() {
 
-        var userInfo = cookie.load('userId')
+        var userInfo = cookie.load('userInfo')
         if(!userInfo){
             return <Redirect to="/login" />
         }

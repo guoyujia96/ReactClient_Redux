@@ -70,7 +70,7 @@ class Login extends Component {
         // if (user && user._id) {
         //     return <Redirect to="/home" />
         // }
-        const userInfo =cookie.load('userId') 
+        const userInfo =cookie.load('userInfo') 
         console.log(userInfo)
         if(userInfo){
 

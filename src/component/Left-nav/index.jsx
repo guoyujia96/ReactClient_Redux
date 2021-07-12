@@ -6,7 +6,6 @@ import {PieChartOutlined} from '@ant-design/icons';
 import "./index.css"
 import Logo from "../../assets/image/logo.png"
 import itemList from "../../config/menuConfig"
-import memoryUtils from "../../utils/memoryUtils";
 
 import {connect} from "react-redux"
 import {setHeadTitle} from '../../redux/actions'
@@ -24,6 +23,7 @@ class LeftNav extends Component {
 
     const menus = this.props.user.role.menus
     const username = this.props.user.username
+
     /*
     1. 如果当前用户是admin
     2. 如果当前item是公开的
