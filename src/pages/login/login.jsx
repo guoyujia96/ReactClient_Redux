@@ -5,33 +5,36 @@ import "./index.less"
 import logo from "../../assets/image/logo.png"
 import memoryUtils from "../../utils/memoryUtils"
 import { Redirect } from 'react-router'
-import {regLogin} from "../../api/index"
+import { regLogin } from "../../api/index"
 import storageUtils from "../../utils/storageUtils"
-import {connect} from "react-redux"
-import { login} from "../../redux/actions"
+import { connect } from "react-redux"
+import { login } from "../../redux/actions"
+
+import cookie from "react-cookies"
 
 const layout = {
     labelCol: {
-      span: 8,
+        span: 8,
     },
     wrapperCol: {
-      span: 16,
+        span: 16,
     },
-  };
-  const tailLayout = {
+};
+const tailLayout = {
     wrapperCol: {
-      offset: 8,
-      span: 16,
+        offset: 8,
+        span: 16,
     },
-  };
-   class Login extends Component {
-  
-     onFinish = (values) => {
+};
+class Login extends Component {
+
+    onFinish = (values) => {
         // console.log('Success:', values);
-        const {username,password} = values;
+        const { username, password } = values;
         // console.log(username,password)
         // 调用分发异步action的函数
-        this.props.login(username,password)
+        this.props.login(username, password)
+        
         // regLogin(username,password).then(response => {
         //     console.log("成功了",response.data)//返回的数据包含status和data
         //     const result = response.data
@@ -51,22 +54,27 @@ const layout = {
         // }).catch(error => {
         //     console.log("失败了",error)
         // }); // alt + <= 回退
-        
-      };
-    
-       onFinishFailed = (errorInfo) => {
+
+    };
+
+    onFinishFailed = (errorInfo) => {
         console.log('校验Failed:', errorInfo);
-      };
+    };
 
     render() {
 
         // 如果已经登录，自动跳转到管理页面
         // const user = memoryUtils.user
         const user = this.props.user
-        if(user && user._id){
-            return <Redirect to="/home"/>
+        // // console.log(user)
+        // if (user && user._id) {
+        //     return <Redirect to="/home" />
+        // }
+
+        if(cookie.load('userId')){
+            return <Redirect to="/home" />
         }
-        
+
         return (
             <div className="login">
                 <header className="login-header">
@@ -74,7 +82,7 @@ const layout = {
                     <h1>React项目: 后台管理系统</h1>
                 </header>
                 <section className="login-content">
-                <div className={user.errorMsg ? 'error-msg show' : 'error-msg'}>{user.errorMsg}</div>
+                    <div className={user.errorMsg ? 'error-msg show' : 'error-msg'}>{user.errorMsg}</div>
                     <h2>用户登录</h2>
                     <Form
                         {...layout}
@@ -94,18 +102,18 @@ const layout = {
                                 {
                                     required: true,
                                     message: '请输入用户名',
-                                    whitespace:true
+                                    whitespace: true
                                 },
                                 {
-                                    max:12,message:"用户名最多12位"
+                                    max: 12, message: "用户名最多12位"
                                 },
                                 {
-                                    min:4,message:"用户名最少4位"
+                                    min: 4, message: "用户名最少4位"
                                 },
                                 {
-                                    pattern:/^[a-zA-Z0-9_]+$/,message:'用户名必须是英文、数组或下划线组成'
+                                    pattern: /^[a-zA-Z0-9_]+$/, message: '用户名必须是英文、数组或下划线组成'
                                 }
-        
+
                             ]}
                         >
                             <Input />
@@ -124,7 +132,6 @@ const layout = {
                             <Input.Password />
                         </Form.Item>
 
-                    
                         <Form.Item {...tailLayout}>
                             <Button type="primary" htmlType="submit" >
                                 登录
@@ -137,8 +144,8 @@ const layout = {
     }
 }
 export default connect(
-    state => ({user:state.user}),
-    {login}
+    state => ({ user: state.user }),
+    { login }
 )(Login)
 /*
 1. 高阶函数
@@ -161,10 +168,10 @@ export default connect(
  */
 
 
-    /*
+/*
 1. 前台表单验证
 2. 收集表单输入数据
- */
+*/
 
 /*
 async和await

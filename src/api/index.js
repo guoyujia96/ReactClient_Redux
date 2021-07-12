@@ -14,7 +14,7 @@ import jsonp from "jsonp"
 import { message } from "antd"
 import "../assets/data/categorys.json"
 
-const BASE = ''
+
 // 登录
 export const regLogin = (username, password) => ajax("/login", { username, password }, "POST")
 // 添加用户
@@ -34,7 +34,7 @@ export const reqUpdateCategory = ({categoryId, categoryName}) => ajax('/manage/c
 export const reqProducts = (pageNum, pageSize) => ajax('/manage/product/list', {pageNum, pageSize})
 
 // 获取一个分类
-export const reqCategory = (categoryId) => ajax(BASE + '/manage/category/info', {categoryId})
+export const reqCategory = (categoryId) => ajax('/manage/category/info', {categoryId})
 // 更新商品的状态(上架/下架)
 export const reqUpdateStatus = (productId, status) => ajax('/manage/product/updateStatus', {productId, status}, 'POST')
 
@@ -42,7 +42,7 @@ export const reqUpdateStatus = (productId, status) => ajax('/manage/product/upda
 搜索商品分页列表 (根据商品名称/商品描述)
 searchType: 搜索的类型, productName/productDesc
  */
-export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) => ajax(BASE + '/manage/product/search', {
+export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) => ajax('/manage/product/search', {
     pageNum,
     pageSize,
     [searchType]: searchName,
@@ -52,22 +52,22 @@ export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) =
 export const reqDeleteImg = (name) => ajax('/manage/img/delete', {name}, 'POST')
 
 // 添加/修改商品
-export const reqAddOrUpdateProduct = (product) => ajax(BASE + '/manage/product/' + ( product._id?'update':'add'), product, 'POST')
+export const reqAddOrUpdateProduct = (product) => ajax('/manage/product/' + ( product._id?'update':'add'), product, 'POST')
 
 
 // 获取所有角色的列表
-export const reqRoles = () => ajax(BASE + '/manage/role/list')
+export const reqRoles = () => ajax('/manage/role/list')
 // 添加角色
-export const reqAddRole = (roleName) => ajax(BASE + '/manage/role/add', {roleName}, 'POST')
+export const reqAddRole = (roleName) => ajax('/manage/role/add', {roleName}, 'POST')
 // 添加角色
-export const reqUpdateRole = (role) => ajax(BASE + '/manage/role/update', role, 'POST')
+export const reqUpdateRole = (role) => ajax('/manage/role/update', role, 'POST')
 
 // 获取所有用户的列表
-export const reqUsers = () => ajax(BASE + '/manage/user/list')
+export const reqUsers = () => ajax('/manage/user/list')
 // 删除指定用户
-export const reqDeleteUser = (userId) => ajax(BASE + '/manage/user/delete', {userId}, 'POST')
+export const reqDeleteUser = (userId) => ajax('/manage/user/delete', {userId}, 'POST')
 // 添加/更新用户
-export const reqAddOrUpdateUser = (user) => ajax(BASE + '/manage/user/'+(user._id ? 'update' : 'add'), user, 'POST')
+export const reqAddOrUpdateUser = (user) => ajax('/manage/user/'+(user._id ? 'update' : 'add'), user, 'POST')
 
 
 
